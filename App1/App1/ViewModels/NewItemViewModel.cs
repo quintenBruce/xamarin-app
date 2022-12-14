@@ -49,7 +49,7 @@ namespace App1.ViewModels
 
         private async void OnSave()
         {
-            Item newItem = new Item()
+            Item_ newItem = new Item_()
             {
                 Id = Guid.NewGuid().ToString(),
                 Text = Text,

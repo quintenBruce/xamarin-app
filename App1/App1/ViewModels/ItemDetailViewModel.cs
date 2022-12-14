@@ -9,6 +9,13 @@ namespace App1.ViewModels
     [QueryProperty(nameof(ItemId), nameof(ItemId))]
     public class ItemDetailViewModel : BaseViewModel
     {
+
+
+
+
+
+
+
         private string itemId;
         private string text;
         private string description;
@@ -52,6 +59,11 @@ namespace App1.ViewModels
             {
                 Debug.WriteLine("Failed to Load Item");
             }
+        }
+
+        public ItemDetailViewModel(string title)
+        {
+            Title= title;
         }
     }
 }

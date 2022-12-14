@@ -10,20 +10,20 @@ namespace App1.ViewModels
 {
     public class ItemsViewModel : BaseViewModel
     {
-        private Item _selectedItem;
+        private Item_ _selectedItem;
 
-        public ObservableCollection<Item> Items { get; }
+        public ObservableCollection<Item_> Items { get; }
         public Command LoadItemsCommand { get; }
         public Command AddItemCommand { get; }
-        public Command<Item> ItemTapped { get; }
+        public Command<Item_> ItemTapped { get; }
 
         public ItemsViewModel()
         {
             Title = "Browse";
-            Items = new ObservableCollection<Item>();
+            Items = new ObservableCollection<Item_>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
-            ItemTapped = new Command<Item>(OnItemSelected);
+            //ItemTapped = new Command<Item_>(OnItemSelected);
 
             AddItemCommand = new Command(OnAddItem);
         }
@@ -57,13 +57,13 @@ namespace App1.ViewModels
             SelectedItem = null;
         }
 
-        public Item SelectedItem
+        public Item_ SelectedItem
         {
             get => _selectedItem;
             set
             {
                 SetProperty(ref _selectedItem, value);
-                OnItemSelected(value);
+                //OnItemSelected(value);
             }
         }
 
@@ -72,13 +72,13 @@ namespace App1.ViewModels
             await Shell.Current.GoToAsync(nameof(NewItemPage));
         }
 
-        async void OnItemSelected(Item item)
-        {
-            if (item == null)
-                return;
+        //async void OnItemSelected(Item_ item)
+        //{
+        //    if (item == null)
+        //        return;
 
-            // This will push the ItemDetailPage onto the navigation stack
-            await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.ItemId)}={item.Id}");
-        }
+        //    // This will push the ItemDetailPage onto the navigation stack
+        //    //await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.ItemId)}={item.Id}");
+        //}
     }
 }
