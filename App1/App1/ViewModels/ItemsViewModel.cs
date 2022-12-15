@@ -23,11 +23,19 @@ namespace App1.ViewModels
         }
 
         public ICommand OpenWebCommand { get; }
-        public ICommand Navigate_ { get; }
+        public ICommand Navigate => new Command<Item>((Item item) =>
+        {
+            var duration = TimeSpan.FromMilliseconds(40);
+            Vibration.Vibrate(duration);
+
+
+            App.Current.MainPage.Navigation.PushAsync(new ItemDetailPage(item.Title));
+        });
 
 
 
-        
+
+
 
 
         public ObservableCollection<Item> Items { get; set; }
@@ -115,7 +123,7 @@ namespace App1.ViewModels
             OpenWebCommand = new Command(async () =>
             await Shell.Current.GoToAsync($"{nameof(NewItemPage)}"));
 
-            Navigate_ = new Command(() => GoToPage());
+           
 
 
 

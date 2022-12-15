@@ -20,26 +20,8 @@ namespace App1.Views
             InitializeComponent();
 
             BindingContext = new ItemsViewModel();
-
-
         }
 
-        public void OnTextChanged(object sender, EventArgs e)
-        {
-            listView.ItemsSource = new List<string>();
-        }
-
-        public async void OnItemTapped(object o, ItemTappedEventArgs e)
-        {
-
-            var duration = TimeSpan.FromMilliseconds(40);
-            Vibration.Vibrate(duration);
-
-
-            await Navigation.PushAsync(new ItemDetailPage("Hello Stupid O"));
-
-
-
-        }
+ 
     }
 }
