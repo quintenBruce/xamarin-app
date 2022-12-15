@@ -27,6 +27,7 @@
                     </VisualStateGroupList>
                 </Setter>
             </Style>
+            <x:String x:Key="IconHammer">&#xf1c0;</x:String>
         </ResourceDictionary>        
     </Application.Resources>
 </Application>

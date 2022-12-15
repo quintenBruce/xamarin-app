@@ -32,9 +32,9 @@ namespace App1
             InitializeComponent();
 
             DependencyService.Register<MockDataStore>();
-            MainPage = new AppShell();
-            Shell.Current.GoToAsync(nameof(Page1));
             
+            MainPage = new AppShell();
+
         }
 
         protected override void OnStart()

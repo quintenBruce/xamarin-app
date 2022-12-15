@@ -2,83 +2,153 @@
 using App1.Views;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace App1.ViewModels
 {
     public class ItemsViewModel : BaseViewModel
     {
-        private Item_ _selectedItem;
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        public ObservableCollection<Item_> Items { get; }
-        public Command LoadItemsCommand { get; }
-        public Command AddItemCommand { get; }
-        public Command<Item_> ItemTapped { get; }
+        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public ICommand OpenWebCommand { get; }
+        public ICommand Navigate_ { get; }
+
+
+
+        
+
+
+        public ObservableCollection<Item> Items { get; set; }
+        public bool IsRefreshing_ { get; set; }
+
+        public ICommand RefreshList => new Command(() =>
+        {
+
+            var newItems = new ObservableCollection<Item>
+            {
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Bookshelves"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Alen Desk"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Console"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Entry Console"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Barndoor"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Outdoor Sofa Table"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Table"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Bed"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Dresser"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Desk"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Bench"}
+            };
+
+            foreach (var item in Items.ToArray())
+                Items.Remove(item);
+
+            foreach (var item in newItems)
+            {
+                if (!Items.ToArray().Contains(item))
+                    Items.Add(item);
+            }
+
+            IsRefreshing_ = false;
+            Height = (Items.Count * 60) + (Items.Count * 5);
+
+            OnPropertyChanged(nameof(Height));
+            OnPropertyChanged(nameof(Items));
+            OnPropertyChanged(nameof(IsRefreshing_));
+        });
+
+        public ICommand PerformSearch => new Command<string>((string query) =>
+        {
+
+            var filteredItems = Items.Where(x => x.Title.ToLower().Contains(query.ToLower()));
+            foreach (var item in Items.ToArray())
+            {
+                if (!filteredItems.Contains(item))
+                    Items.Remove(item);
+            }
+            Height = (Items.Count * 60) + (Items.Count * 5);
+            OnPropertyChanged(nameof(Height));
+            OnPropertyChanged(nameof(Items));
+        });
+
+
+
+
+        public void GoToPage()
+        {
+            HapticFeedback.Perform(HapticFeedbackType.LongPress);
+            App.Current.MainPage.Navigation.PushAsync(new Page1());
+        }
+
+
+
+
+        int _height;
+
+        public int Height
+
+        {
+            get { return _height; }
+            set
+            {
+                _height = value;
+                OnPropertyChanged(nameof(Height));
+            }
+        }
 
         public ItemsViewModel()
         {
-            Title = "Browse";
-            Items = new ObservableCollection<Item_>();
-            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
-            //ItemTapped = new Command<Item_>(OnItemSelected);
+            
+            Title = "Items";
+            OpenWebCommand = new Command(async () =>
+            await Shell.Current.GoToAsync($"{nameof(NewItemPage)}"));
 
-            AddItemCommand = new Command(OnAddItem);
-        }
+            Navigate_ = new Command(() => GoToPage());
 
-        async Task ExecuteLoadItemsCommand()
-        {
-            IsBusy = true;
 
-            try
+
+            Items = new ObservableCollection<Item>
             {
-                Items.Clear();
-                var items = await DataStore.GetItemsAsync(true);
-                foreach (var item in items)
-                {
-                    Items.Add(item);
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            finally
-            {
-                IsBusy = false;
-            }
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Bookshelves"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Alen Desk"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Console"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Entry Console"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Barndoor"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Outdoor Sofa Table"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Console"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Entry Console"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Barndoor"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Outdoor Sofa Table"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Table"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Bed"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Table"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Bed"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Dresser"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Desk"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Console"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Entry Console"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Barndoor"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Outdoor Sofa Table"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Table"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Bed"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Bench"}
+
+            };
+
+            Height = (Items.Count * 60) + (Items.Count * 5);
+
         }
-
-        public void OnAppearing()
-        {
-            IsBusy = true;
-            SelectedItem = null;
-        }
-
-        public Item_ SelectedItem
-        {
-            get => _selectedItem;
-            set
-            {
-                SetProperty(ref _selectedItem, value);
-                //OnItemSelected(value);
-            }
-        }
-
-        private async void OnAddItem(object obj)
-        {
-            await Shell.Current.GoToAsync(nameof(NewItemPage));
-        }
-
-        //async void OnItemSelected(Item_ item)
-        //{
-        //    if (item == null)
-        //        return;
-
-        //    // This will push the ItemDetailPage onto the navigation stack
-        //    //await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.ItemId)}={item.Id}");
-        //}
     }
 }

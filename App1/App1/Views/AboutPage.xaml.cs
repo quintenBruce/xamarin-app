@@ -22,7 +22,7 @@ namespace App1.Views
 
         public void OnTextChanged(object sender, EventArgs e)
         {
-            listView.ItemsSource= new List<string>();
+            
         }
 
         public async void OnItemTapped(object o, ItemTappedEventArgs e)

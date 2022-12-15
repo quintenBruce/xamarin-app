@@ -88,7 +88,7 @@ namespace App1.ViewModels
 
         public AboutViewModel()
         {
-            Title = "About";
+            Title = "About--";
             OpenWebCommand = new Command(async () => 
             await Shell.Current.GoToAsync($"{nameof(NewItemPage)}"));
 
