@@ -6,18 +6,16 @@ using System.Text;
 
 namespace App1.Models
 {
-    public class Item
+    public class Image
     {
         [PrimaryKey] [AutoIncrement]
         public int Id { get; set; }
-        public string Title { get; set; }
-        public string Notes { get; set; }
-        [OneToMany]
-        public List<Image> Images { get; set; }
-        public DateTime Date { get; set; }
+        [ForeignKey(typeof(Item))]
+        public int ItemId { get; set; }
+        public string Path { get; set; }
 
+        [ManyToOne]
+        public Item Item { get; set; }
         
-
-
     }
 }
