@@ -1,15 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:vm="clr-namespace:App1.ViewModels"
              x:Class="App1.Views.ItemDetailPage"
-             
              Title="{Binding Title}">
+    <ContentPage.BindingContext>
+        <vm:ItemDetailViewModel />
+    </ContentPage.BindingContext>
 
     <StackLayout Spacing="20" Padding="15">
-        <Label Text="{Binding Title}" FontSize="Medium" TextColor="brown" />
-        <Label Text="Joe" FontSize="Small" TextColor="red"/>
+        <Label Text="{Binding Title}" FontSize="Medium" TextColor="LawnGreen" />
+        <Label Text="{Binding Notes}" FontSize="Small" TextColor="DeepSkyBlue" />
         <Label Text="Description:" FontSize="Medium" />
-        <Label Text="{Binding Description}" FontSize="Small"/>
+        <Label Text="{Binding Date}" FontSize="Small" TextColor="SaddleBrown" />
+        <Button  Text="Press for image">
+            <Button.Behaviors>
+                <xct:EventToCommandBehavior EventName="Pressed" Command="{Binding PickImage}">
+                </xct:EventToCommandBehavior>
+            </Button.Behaviors>
+        </Button>
+        <Image
+            Source="/storage/emulated/0/Android/data/com.companyname.app1/cache/2203693cc04e0be7f4f024d5f9499e13/52c5697dd93846ceb024b053f67eab98/1000001728.jpg"
+             BackgroundColor="red" />
     </StackLayout>
-    
 </ContentPage>

@@ -5,9 +5,9 @@
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" 
-                   TextColor="red"/>
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="CenterAndExpand"
+                   TextColor="red" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

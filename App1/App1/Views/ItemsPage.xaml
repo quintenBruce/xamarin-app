@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              xmlns:local="clr-namespace:App1.MarkupExtensions"
              xmlns:vm="clr-namespace:App1.ViewModels"
-             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="App1.Views.ItemsPage"
              Title="{Binding Title}">
 
@@ -28,29 +28,29 @@
                     <Frame BackgroundColor="white" Padding="10, 0, 10, 0" BorderColor="white" HasShadow="False">
                         <Frame BackgroundColor="white" CornerRadius="5" BorderColor="ForestGreen">
                             <Frame Padding="0" CornerRadius="10">
-                                <SearchBar    
+                                <SearchBar
                                 x:Name="searchBar"
                                 SearchCommand="{Binding PerformSearch}"
                                 SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"
-                                Margin="0" 
+                                Margin="0"
                                 Placeholder="Search"
-                                BackgroundColor="CadetBlue" 
-                                HorizontalOptions="FillAndExpand" 
+                                BackgroundColor="CadetBlue"
+                                HorizontalOptions="FillAndExpand"
                                 TextColor="Cornsilk">
                                     <SearchBar.Behaviors>
-                                        <xct:EventToCommandBehavior EventName="TextChanged" Command="{Binding PerformSearch}" CommandParameter="{Binding Text, Source={x:Reference searchBar}}"/>
+                                        <xct:EventToCommandBehavior EventName="TextChanged" Command="{Binding PerformSearch}" CommandParameter="{Binding Text, Source={x:Reference searchBar}}" />
                                     </SearchBar.Behaviors>
                                 </SearchBar>
                             </Frame>
                         </Frame>
                     </Frame>
 
-                    <Frame Margin="10, 10, 0, 0" Padding="0" HasShadow="False" >
-                        <ListView x:Name="listView" ItemsSource="{Binding Items}" HeightRequest="{Binding Height}" >
-                            
+                    <Frame Margin="10, 10, 0, 0" Padding="0" HasShadow="False">
+                        <ListView x:Name="listView" ItemsSource="{Binding Items}" HeightRequest="{Binding Height}">
+
                             <ListView.ItemTemplate>
-                                <DataTemplate >
-                                    <ImageCell Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ItemsViewModel}}, Path=Navigate}" CommandParameter="{Binding .}" ImageSource="{local:EnbeddedImage ResorceId=App1.Images.no_image_icon.png}" DetailColor="Gray" TextColor="{StaticResource Primary}" Text="{Binding Title}" Detail="{Binding Date, StringFormat='{0:MM/dd/yy}'}">
+                                <DataTemplate>
+                                    <ImageCell Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ItemsViewModel}}, Path=Navigate}" CommandParameter="{Binding .}" ImageSource="{local:EmbeddedImage ResorceId=App1.Images.no_image_icon.png}" DetailColor="Gray" TextColor="{StaticResource Primary}" Text="{Binding Title}" Detail="{Binding Date, StringFormat='{0:MM/dd/yy}'}">
                                         <ImageCell.ContextActions>
                                             <ToolbarItem Text="Delete" CommandParameter="{Binding .}"></ToolbarItem>
                                         </ImageCell.ContextActions>

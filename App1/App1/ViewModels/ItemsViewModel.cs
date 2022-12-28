@@ -3,10 +3,8 @@ using App1.Views;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -23,27 +21,20 @@ namespace App1.ViewModels
         }
 
         public ICommand OpenWebCommand { get; }
+
         public ICommand Navigate => new Command<Item>((Item item) =>
         {
             var duration = TimeSpan.FromMilliseconds(40);
             Vibration.Vibrate(duration);
 
-
-            App.Current.MainPage.Navigation.PushAsync(new ItemDetailPage(item.Title));
+            App.Current.MainPage.Navigation.PushAsync(new ItemDetailPage(item));
         });
-
-
-
-
-
-
 
         public ObservableCollection<Item> Items { get; set; }
         public bool IsRefreshing_ { get; set; }
 
         public ICommand RefreshList => new Command(() =>
         {
-
             var newItems = new ObservableCollection<Item>
             {
                 new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Bookshelves"},
@@ -78,7 +69,6 @@ namespace App1.ViewModels
 
         public ICommand PerformSearch => new Command<string>((string query) =>
         {
-
             var filteredItems = Items.Where(x => x.Title.ToLower().Contains(query.ToLower()));
             foreach (var item in Items.ToArray())
             {
@@ -90,19 +80,13 @@ namespace App1.ViewModels
             OnPropertyChanged(nameof(Items));
         });
 
-
-
-
         public void GoToPage()
         {
             HapticFeedback.Perform(HapticFeedbackType.LongPress);
             App.Current.MainPage.Navigation.PushAsync(new Page1());
         }
 
-
-
-
-        int _height;
+        private int _height;
 
         public int Height
 
@@ -117,15 +101,9 @@ namespace App1.ViewModels
 
         public ItemsViewModel()
         {
-
-            
             Title = "Items";
             OpenWebCommand = new Command(async () =>
             await Shell.Current.GoToAsync($"{nameof(NewItemPage)}"));
-
-           
-
-
 
             Items = new ObservableCollection<Item>
             {
@@ -152,11 +130,9 @@ namespace App1.ViewModels
                 new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Table"},
                 new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Bed"},
                 new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Bench"}
-
             };
 
             Height = (Items.Count * 60) + (Items.Count * 5);
-
         }
     }
 }

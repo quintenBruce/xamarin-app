@@ -1,26 +1,18 @@
-﻿using App1.ViewModels;
-using System.ComponentModel;
+﻿using App1.Models;
+using App1.ViewModels;
 using Xamarin.Forms;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace App1.Views
 {
     public partial class ItemDetailPage : ContentPage
     {
-
         public string YESir { get; set; }
 
-
-        public ItemDetailPage(string Title)
+        public ItemDetailPage(Item item)
         {
-
-            
             InitializeComponent();
 
-            BindingContext = new ItemDetailViewModel(Title);
-
-            
-
+            BindingContext = new ItemDetailViewModel(item);
         }
     }
 }

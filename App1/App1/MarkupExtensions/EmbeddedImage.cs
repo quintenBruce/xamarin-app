@@ -6,7 +6,7 @@ using Xamarin.Forms.Xaml;
 
 namespace App1.MarkupExtensions
 {
-    public class EnbeddedImage : IMarkupExtension
+    public class EmbeddedImage : IMarkupExtension
     {
         public string ResorceId { get; set; }
         public object ProvideValue(IServiceProvider serviceProvider)
@@ -17,3 +17,6 @@ namespace App1.MarkupExtensions
         }
     }
 }
+
+
+

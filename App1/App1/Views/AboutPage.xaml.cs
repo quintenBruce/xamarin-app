@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using Xamarin.Essentials;
+﻿using App1.ViewModels;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-using App1.ViewModels;
 
 namespace App1.Views
 {
@@ -16,26 +10,6 @@ namespace App1.Views
             InitializeComponent();
 
             BindingContext = new AboutViewModel();
-
-            
-        }
-
-        public void OnTextChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-        public async void OnItemTapped(object o, ItemTappedEventArgs e)
-        {
-
-            var duration = TimeSpan.FromMilliseconds(40);
-            Vibration.Vibrate(duration);
-
-
-            await Navigation.PushAsync(new ItemDetailPage("Hello Stupid O"));
-                
-            
-            
         }
     }
 }

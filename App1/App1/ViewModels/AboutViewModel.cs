@@ -1,21 +1,18 @@
 ﻿using App1.Models;
 using App1.Views;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace App1.ViewModels
 {
-    public class AboutViewModel : BaseViewModel 
+    public class AboutViewModel : BaseViewModel
     {
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
@@ -26,17 +23,11 @@ namespace App1.ViewModels
         public ICommand OpenWebCommand { get; }
         public ICommand Navigate_ { get; }
 
-        
-
-
-
-
         public ObservableCollection<Item> Items { get; set; }
         public bool IsRefreshing_ { get; set; }
 
         public ICommand RefreshList => new Command(() =>
         {
-
             var newItems = new ObservableCollection<Item>
             {
                 new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Bookshelves"},
@@ -62,7 +53,6 @@ namespace App1.ViewModels
 
         public ICommand PerformSearch => new Command<string>((string query) =>
         {
-
             var filteredItems = Items.Where(x => x.Title.Contains(query));
             foreach (var item in Items.ToArray())
             {
@@ -73,28 +63,19 @@ namespace App1.ViewModels
             OnPropertyChanged(nameof(Items));
         });
 
-
-
-
         public void GoToPage()
         {
             HapticFeedback.Perform(HapticFeedbackType.LongPress);
             App.Current.MainPage.Navigation.PushAsync(new Page1());
         }
 
-        
-       
-
-
         public AboutViewModel()
         {
             Title = "About--";
-            OpenWebCommand = new Command(async () => 
+            OpenWebCommand = new Command(async () =>
             await Shell.Current.GoToAsync($"{nameof(NewItemPage)}"));
 
             Navigate_ = new Command(() => GoToPage());
-
-
 
             Items = new ObservableCollection<Item>
             {
@@ -103,9 +84,6 @@ namespace App1.ViewModels
                 new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Console"},
                 new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Barndoor"},
             };
-
         }
-
     }
-
 }

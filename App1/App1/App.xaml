@@ -28,6 +28,6 @@
                 </Setter>
             </Style>
             <x:String x:Key="IconHammer">&#xf1c0;</x:String>
-        </ResourceDictionary>        
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

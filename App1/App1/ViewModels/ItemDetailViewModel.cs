@@ -1,69 +1,77 @@
 ﻿using App1.Models;
-using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
+using System.IO;
+using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace App1.ViewModels
 {
-    [QueryProperty(nameof(ItemId), nameof(ItemId))]
     public class ItemDetailViewModel : BaseViewModel
     {
+        private FileResult photoPath { get; set; }
+        public ImageSource image { get; set; }
 
-
-
-
-
-
-
-        private string itemId;
-        private string text;
-        private string description;
-        public string Id { get; set; }
-
-        public string Text
-        {
-            get => text;
-            set => SetProperty(ref text, value);
-        }
-
-        public string Description
-        {
-            get => description;
-            set => SetProperty(ref description, value);
-        }
-
-        public string ItemId
+        public FileResult PhotoPath
         {
             get
             {
-                return itemId;
+                return photoPath;
             }
             set
             {
-                itemId = value;
-                LoadItemId(value);
+                photoPath = value;
             }
         }
 
-        public async void LoadItemId(string itemId)
+        private string itemId;
+        private string notes;
+        private string date;
+
+        public ICommand PickImage => new Command(async () =>
         {
-            try
+
+            var photo = await MediaPicker.PickPhotoAsync();
+
+            var stream = await photo.OpenReadAsync();
+
+            using (var memoryStream = new MemoryStream())
             {
-                var item = await DataStore.GetItemAsync(itemId);
-                Id = item.Id;
-                Text = item.Text;
-                Description = item.Description;
+                stream.CopyTo(memoryStream);
             }
-            catch (Exception)
-            {
-                Debug.WriteLine("Failed to Load Item");
-            }
+
+            var sldf = photo.FullPath;
+
+            image = ImageSource.FromStream(() => stream);
+
+            OnPropertyChanged(nameof(image));
+
+        }
+        );
+
+        public string Id { get; set; }
+
+        public string Date
+        {
+            get => date;
+            set => SetProperty(ref date, value);
         }
 
-        public ItemDetailViewModel(string title)
+        public string Notes
         {
-            Title= title;
+            get => notes;
+            set => SetProperty(ref notes, value);
         }
+
+        public ItemDetailViewModel(Item item)
+        {
+            Title = item.Title;
+            Notes = item.Notes;
+            Date = item.Date.ToString("MM/dd/yyyy");
+        }
+
+        public ItemDetailViewModel()
+        {
+            //
+        } //parameterless constructor
     }
 }

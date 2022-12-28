@@ -1,8 +1,5 @@
 ﻿using App1.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace App1.ViewModels
@@ -49,14 +46,7 @@ namespace App1.ViewModels
 
         private async void OnSave()
         {
-            Item_ newItem = new Item_()
-            {
-                Id = Guid.NewGuid().ToString(),
-                Text = Text,
-                Description = Description
-            };
-
-            await DataStore.AddItemAsync(newItem);
+            
 
             // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("..");
