@@ -1,5 +1,9 @@
 ﻿using App1.Models;
+using App1.Services;
 using System;
+using System.Collections.Generic;
+using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace App1.ViewModels
@@ -8,6 +12,89 @@ namespace App1.ViewModels
     {
         private string text;
         private string description;
+
+
+
+
+
+
+
+
+
+
+
+
+        public ICommand PickImage => new Command(async () =>
+        {
+
+            var photo = await MediaPicker.PickPhotoAsync();
+
+            var stream = await photo.OpenReadAsync();
+
+
+
+            var newFile = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
+
+            using (var newStream = File.OpenWrite(newFile))
+            {
+                await stream.CopyToAsync(newStream);
+
+            }
+
+            var photoPath = newFile;
+
+            var images = new List<App1.Models.Image>
+                {
+                    new App1.Models.Image { Path= photoPath}
+                };
+
+            ItemsRepository.CreateItemAsync(new Item { Images = images });
+
+
+
+
+            var allItems = await ItemsRepository.GetItemsAsync();
+
+
+            Image = ImageSource.FromFile(allItems.Last().Images.Last().Path);
+
+
+            var sdffff = "gg";
+
+
+        }
+        );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public NewItemViewModel()
         {

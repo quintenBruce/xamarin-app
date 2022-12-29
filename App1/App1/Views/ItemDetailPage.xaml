@@ -21,7 +21,7 @@
             </Button.Behaviors>
         </Button>
         <Image
-            Source="/storage/emulated/0/Android/data/com.companyname.app1/cache/2203693cc04e0be7f4f024d5f9499e13/52c5697dd93846ceb024b053f67eab98/1000001728.jpg"
+            Source="{Binding Image}"
              BackgroundColor="red" />
     </StackLayout>
 </ContentPage>
