@@ -2,6 +2,7 @@
 using App1.Services;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -56,7 +57,7 @@ namespace App1.ViewModels
             var allItems = await ItemsRepository.GetItemsAsync();
 
 
-            Image = ImageSource.FromFile(allItems.Last().Images.Last().Path);
+            //Image = ImageSource.FromFile(allItems.Last().Images.Last().Path);
 
 
             var sdffff = "gg";

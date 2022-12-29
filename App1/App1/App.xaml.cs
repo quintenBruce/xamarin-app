@@ -1,8 +1,4 @@
-﻿using App1.Data;
-using System;
-using System.IO;
-using Xamarin.Essentials;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace App1
 {
