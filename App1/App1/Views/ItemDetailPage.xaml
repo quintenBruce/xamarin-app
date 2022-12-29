@@ -1,27 +1,69 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:local="clr-namespace:App1.MarkupExtensions"
              xmlns:vm="clr-namespace:App1.ViewModels"
              x:Class="App1.Views.ItemDetailPage"
              Title="{Binding Title}">
+
+    <ContentPage.Resources>
+        <Style TargetType="Grid">
+            <Setter Property="ColumnSpacing" Value="0" />
+            <Setter Property="RowSpacing" Value="0" />
+        </Style>
+    </ContentPage.Resources>
+
     <ContentPage.BindingContext>
         <vm:ItemDetailViewModel />
     </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Edit" />
+    </ContentPage.ToolbarItems>
+    <ScrollView>
+        <local:PinchToZoomContainer>
+            <local:PinchToZoomContainer.Content>
+                <StackLayout Spacing="20" Padding="15">
 
-    <StackLayout Spacing="20" Padding="15">
-        <Label Text="{Binding Title}" FontSize="Medium" TextColor="LawnGreen" />
-        <Label Text="{Binding Notes}" FontSize="Small" TextColor="DeepSkyBlue" />
-        <Label Text="Description:" FontSize="Medium" />
-        <Label Text="{Binding Date}" FontSize="Small" TextColor="SaddleBrown" />
-        <Button  Text="Press for image">
-            <Button.Behaviors>
-                <xct:EventToCommandBehavior EventName="Pressed" Command="{Binding PickImage}">
-                </xct:EventToCommandBehavior>
-            </Button.Behaviors>
-        </Button>
-        <Image
-            Source="{Binding Image}"
-             BackgroundColor="red" />
-    </StackLayout>
+                    
+                    <Grid ColumnSpacing="0" RowSpacing="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="64"/>
+                            <ColumnDefinition Width="134"/>
+                            <ColumnDefinition Width="60"/>
+                        </Grid.ColumnDefinitions>
+                        <Label VerticalOptions="Center" Text="Notes " TextColor="Gray" FontSize="Large" Grid.Row="0" Grid.Column="0"/>
+                        <Label Padding="0, 4, 0, 0" VerticalOptions="Center" Text=" (pinch laterally to zoom)" TextColor="Gray" FontSize="12" Grid.Row="0" Grid.Column="1"/>
+                        <Label VerticalOptions="Center" Text=" :" TextColor="Gray" FontSize="Large" Grid.Row="0" Grid.Column="2"/>
+                    </Grid>
+
+
+
+                    <Frame BackgroundColor="Black" CornerRadius="11" Padding="0" Margin="0">
+                        <Frame BackgroundColor="Black" CornerRadius="6" Margin="5" Padding="0">
+                            <Image
+                                Source="{local:EmbeddedImage ResorceId=App1.Images.1000001730.jpg}"
+                                BackgroundColor="white" />
+                        </Frame>
+                    </Frame>
+                    <Frame BackgroundColor="Black" CornerRadius="11" Padding="0" Margin="0">
+                        <Frame BackgroundColor="Black" CornerRadius="6" Margin="5" Padding="0">
+                            <Image
+                                Source="{local:EmbeddedImage ResorceId=App1.Images.1000001730.jpg}"
+                                BackgroundColor="white" />
+                        </Frame>
+                    </Frame>
+                    <Frame BackgroundColor="Black" CornerRadius="11" Padding="0" Margin="0">
+                        <Frame BackgroundColor="Black" CornerRadius="6" Margin="5" Padding="0">
+                            <Image
+                                Source="{local:EmbeddedImage ResorceId=App1.Images.1000001730.jpg}"
+                                BackgroundColor="white" />
+                        </Frame>
+                    </Frame>
+
+                    <Label Text="Written Notes:" FontSize="Large" TextColor="Gray" />
+                    <Label TextColor="#3371A8" FontSize="Medium" Text="No comfort do written conduct at prevent manners on. Celebrated contrasted discretion him sympathize her collecting occasional. Do answered bachelor occasion in of offended no concerns. Supply worthy warmth branch of no ye. Voice tried known to as my to. Though wished merits or be. Alone visit use these smart rooms ham. No waiting in on enjoyed placing it inquiry." />
+                </StackLayout>
+            </local:PinchToZoomContainer.Content>
+        </local:PinchToZoomContainer>
+    </ScrollView>
 </ContentPage>
