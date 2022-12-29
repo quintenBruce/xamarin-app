@@ -14,7 +14,7 @@ namespace App1.Models
         public string Title { get; set; }
         public string Notes { get; set; }
 
-        [OneToMany]
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<Image> Images { get; set; }
 
         public DateTime Date { get; set; }
