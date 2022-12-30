@@ -1,6 +1,7 @@
 ﻿using App1.Models;
 using App1.Services;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,18 @@ namespace App1.ViewModels
     public class ItemDetailViewModel : BaseViewModel
     {
 
+        public List<Models.Image> images;
+        public List<Models.Image> Images 
+        {
+            get { return images; }
+            set
+            {
+                images = value;
+                OnPropertyChanged(nameof(Image));
+
+            }
+        }
+
         public ImageSource image { get; set; }
         public ImageSource Image
         {
@@ -24,10 +37,6 @@ namespace App1.ViewModels
 
             }
         }
-
-
-
-        
 
         
 
@@ -50,6 +59,7 @@ namespace App1.ViewModels
 
         public ItemDetailViewModel(Item item)
         {
+            Images = item.Images;
             Title = item.Title;
             Notes = item.Notes;
             Date = item.Date.ToString("MM/dd/yyyy");
@@ -57,7 +67,7 @@ namespace App1.ViewModels
 
         public ItemDetailViewModel()
         {
-            //
-        } //parameterless constructor
+
+        } 
     }
 }

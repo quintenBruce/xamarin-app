@@ -1,10 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:App1.MarkupExtensions"
-             xmlns:vm="clr-namespace:App1.ViewModels"
-             x:Class="App1.Views.ItemDetailPage"
-             Title="{Binding Title}">
+<ContentPage
+    x:Class="App1.Views.ItemDetailPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:App1.MarkupExtensions"
+    xmlns:vm="clr-namespace:App1.ViewModels"
+    xmlns:xfg="clr-namespace:XFGloss;assembly=XFGloss"
+    Title="{Binding Title}">
 
     <ContentPage.Resources>
         <Style TargetType="Grid">
@@ -22,46 +24,91 @@
     <ScrollView>
         <local:PinchToZoomContainer>
             <local:PinchToZoomContainer.Content>
-                <StackLayout Spacing="20" Padding="15">
-
-                    
+                <StackLayout Padding="15" Spacing="20">
                     <Grid ColumnSpacing="0" RowSpacing="0">
+                        <!--  Grid to properly space Notes "(pinch to zoom)" text  -->
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="64"/>
-                            <ColumnDefinition Width="134"/>
-                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="64" />
+                            <ColumnDefinition Width="149" />
+                            <ColumnDefinition Width="60" />
                         </Grid.ColumnDefinitions>
-                        <Label VerticalOptions="Center" Text="Notes " TextColor="Gray" FontSize="Large" Grid.Row="0" Grid.Column="0"/>
-                        <Label Padding="0, 4, 0, 0" VerticalOptions="Center" Text=" (pinch laterally to zoom)" TextColor="Gray" FontSize="12" Grid.Row="0" Grid.Column="1"/>
-                        <Label VerticalOptions="Center" Text=" :" TextColor="Gray" FontSize="Large" Grid.Row="0" Grid.Column="2"/>
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            FontSize="Large"
+                            Text="Notes "
+                            TextColor="#303030"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Padding="0,4,0,0"
+                            FontSize="13"
+                            Text=" (pinch laterally to zoom)"
+                            TextColor="#303030"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            FontSize="Large"
+                            Text=" :"
+                            TextColor="#303030"
+                            VerticalOptions="Center" />
                     </Grid>
-
-
-
-                    <Frame BackgroundColor="Black" CornerRadius="11" Padding="0" Margin="0">
-                        <Frame BackgroundColor="Black" CornerRadius="6" Margin="5" Padding="0">
-                            <Image
-                                Source="{local:EmbeddedImage ResorceId=App1.Images.1000001730.jpg}"
-                                BackgroundColor="white" />
+                    <!--  stack layout bound to Images property that will contain images  -->
+                    <StackLayout BindableLayout.ItemsSource="{Binding Images}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout>
+                                    <!--  nested frames to give border width appearance  -->
+                                    <Frame
+                                        Margin="0"
+                                        Padding="0"
+                                        BackgroundColor="#767676"
+                                        CornerRadius="11">
+                                        <Frame
+                                            Margin="3"
+                                            Padding="0"
+                                            BackgroundColor="#767676"
+                                            CornerRadius="9">
+                                            <Image BackgroundColor="white" Source="{Binding Path}" />
+                                        </Frame>
+                                    </Frame>
+                                </StackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                    <Label
+                        FontSize="Large"
+                        Text="Written Notes:"
+                        TextColor="#303030" />
+                    <!--  nested frames to give border width appearance  -->
+                    <Frame
+                        Margin="0"
+                        Padding="0"
+                        BackgroundColor="#767676"
+                        CornerRadius="7">
+                        <Frame
+                            Margin="2"
+                            Padding="3,1,1,0"
+                            CornerRadius="5">
+                            <Label
+                                FontSize="Medium"
+                                Text="{Binding Notes}"
+                                TextColor="#767676" />
                         </Frame>
                     </Frame>
-                    <Frame BackgroundColor="Black" CornerRadius="11" Padding="0" Margin="0">
-                        <Frame BackgroundColor="Black" CornerRadius="6" Margin="5" Padding="0">
-                            <Image
-                                Source="{local:EmbeddedImage ResorceId=App1.Images.1000001730.jpg}"
-                                BackgroundColor="white" />
-                        </Frame>
-                    </Frame>
-                    <Frame BackgroundColor="Black" CornerRadius="11" Padding="0" Margin="0">
-                        <Frame BackgroundColor="Black" CornerRadius="6" Margin="5" Padding="0">
-                            <Image
-                                Source="{local:EmbeddedImage ResorceId=App1.Images.1000001730.jpg}"
-                                BackgroundColor="white" />
-                        </Frame>
-                    </Frame>
-
-                    <Label Text="Written Notes:" FontSize="Large" TextColor="Gray" />
-                    <Label TextColor="#3371A8" FontSize="Medium" Text="No comfort do written conduct at prevent manners on. Celebrated contrasted discretion him sympathize her collecting occasional. Do answered bachelor occasion in of offended no concerns. Supply worthy warmth branch of no ye. Voice tried known to as my to. Though wished merits or be. Alone visit use these smart rooms ham. No waiting in on enjoyed placing it inquiry." />
+                    <Label
+                        FontSize="11"
+                        Text="{Binding Date}"
+                        TextColor="#767676">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Created on:  " />
+                                <Span Text="{Binding Date}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
                 </StackLayout>
             </local:PinchToZoomContainer.Content>
         </local:PinchToZoomContainer>
