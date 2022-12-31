@@ -21,7 +21,7 @@ namespace App1.Services
             }
         }
 
-        public static async Task<List<Item>> GetItemsAsync()
+        public static async Task<List<Item>> GetAllItemsAsync()
         {
             await Init();
             return database.GetAllWithChildren<Item>();
@@ -43,6 +43,12 @@ namespace App1.Services
         {
             await Init();
             database.InsertWithChildren(item);
+        }
+
+        public static void DeleteItemsandImages()
+        {
+            database.DeleteAll<Item>();
+            database.DeleteAll<Image>();
         }
     }
 }
