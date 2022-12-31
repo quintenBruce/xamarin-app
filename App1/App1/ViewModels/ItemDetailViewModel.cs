@@ -60,7 +60,7 @@ namespace App1.ViewModels
         public ItemDetailViewModel(Item item)
         {
             Images = item.Images;
-            Title = item.Title;
+            Title = item.Name;
             Notes = item.Notes;
             Date = item.Date.ToString("MM/dd/yyyy");
         }
