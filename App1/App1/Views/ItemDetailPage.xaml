@@ -1,27 +1,116 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-             xmlns:vm="clr-namespace:App1.ViewModels"
-             x:Class="App1.Views.ItemDetailPage"
-             Title="{Binding Title}">
+<ContentPage
+    x:Class="App1.Views.ItemDetailPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:App1.MarkupExtensions"
+    xmlns:vm="clr-namespace:App1.ViewModels"
+    xmlns:xfg="clr-namespace:XFGloss;assembly=XFGloss"
+    Title="{Binding Title}">
+
+    <ContentPage.Resources>
+        <Style TargetType="Grid">
+            <Setter Property="ColumnSpacing" Value="0" />
+            <Setter Property="RowSpacing" Value="0" />
+        </Style>
+    </ContentPage.Resources>
+
     <ContentPage.BindingContext>
         <vm:ItemDetailViewModel />
     </ContentPage.BindingContext>
-
-    <StackLayout Spacing="20" Padding="15">
-        <Label Text="{Binding Title}" FontSize="Medium" TextColor="LawnGreen" />
-        <Label Text="{Binding Notes}" FontSize="Small" TextColor="DeepSkyBlue" />
-        <Label Text="Description:" FontSize="Medium" />
-        <Label Text="{Binding Date}" FontSize="Small" TextColor="SaddleBrown" />
-        <Button  Text="Press for image">
-            <Button.Behaviors>
-                <xct:EventToCommandBehavior EventName="Pressed" Command="{Binding PickImage}">
-                </xct:EventToCommandBehavior>
-            </Button.Behaviors>
-        </Button>
-        <Image
-            Source="{Binding Image}"
-             BackgroundColor="red" />
-    </StackLayout>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Edit" />
+    </ContentPage.ToolbarItems>
+    <ScrollView>
+        <local:PinchToZoomContainer>
+            <local:PinchToZoomContainer.Content>
+                <StackLayout Padding="15" Spacing="20">
+                    <Grid ColumnSpacing="0" RowSpacing="0">
+                        <!--  Grid to properly space Notes "(pinch to zoom)" text  -->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="64" />
+                            <ColumnDefinition Width="149" />
+                            <ColumnDefinition Width="60" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            FontSize="Large"
+                            Text="Notes "
+                            TextColor="#303030"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Padding="0,4,0,0"
+                            FontSize="13"
+                            Text=" (pinch laterally to zoom)"
+                            TextColor="#303030"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            FontSize="Large"
+                            Text=" :"
+                            TextColor="#303030"
+                            VerticalOptions="Center" />
+                    </Grid>
+                    <!--  stack layout bound to Images property that will contain images  -->
+                    <StackLayout BindableLayout.ItemsSource="{Binding Images}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout>
+                                    <!--  nested frames to give border width appearance  -->
+                                    <Frame
+                                        Margin="0"
+                                        Padding="0"
+                                        BackgroundColor="#767676"
+                                        CornerRadius="11">
+                                        <Frame
+                                            Margin="3"
+                                            Padding="0"
+                                            BackgroundColor="#767676"
+                                            CornerRadius="9">
+                                            <Image BackgroundColor="white" Source="{Binding Path}" />
+                                        </Frame>
+                                    </Frame>
+                                </StackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                    <Label
+                        FontSize="Large"
+                        Text="Written Notes:"
+                        TextColor="#303030" />
+                    <!--  nested frames to give border width appearance  -->
+                    <Frame
+                        Margin="0"
+                        Padding="0"
+                        BackgroundColor="#767676"
+                        CornerRadius="7">
+                        <Frame
+                            Margin="2"
+                            Padding="3,1,1,0"
+                            CornerRadius="5">
+                            <Label
+                                FontSize="Medium"
+                                Text="{Binding Notes}"
+                                TextColor="#767676" />
+                        </Frame>
+                    </Frame>
+                    <Label
+                        FontSize="11"
+                        Text="{Binding Date}"
+                        TextColor="#767676">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Created on:  " />
+                                <Span Text="{Binding Date}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </StackLayout>
+            </local:PinchToZoomContainer.Content>
+        </local:PinchToZoomContainer>
+    </ScrollView>
 </ContentPage>
