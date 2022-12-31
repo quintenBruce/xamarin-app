@@ -14,6 +14,8 @@ namespace App1.Models
         public string Name { get; set; }
         public string Notes { get; set; }
 
+        public string CoverImagePath { get; set; }
+
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<Image> Images { get; set; }
 
