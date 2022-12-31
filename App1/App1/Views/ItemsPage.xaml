@@ -13,6 +13,10 @@
         <vm:ItemsViewModel />
     </ContentPage.BindingContext>
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="{local:EmbeddedImage ResorceId=App1.Images.icons8-plus-math-71.png}" Command="{Binding AddItem}" />
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Resources>
         <ResourceDictionary>
             <Color x:Key="Accent">#96d1ff</Color>

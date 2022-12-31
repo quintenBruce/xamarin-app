@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <None Remove="Images\1000001730.jpg" />
+    <None Remove="Images\icons8-plus-math-71.png" />
     <None Remove="Images\no_image_icon.png" />
     <None Remove="Resources\Fonts\FAR9.otf" />
     <None Remove="Resources\Fonts\Font Awesome 6 Brands-Regular-400.otf" />
@@ -15,6 +16,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Images\1000001730.jpg" />
+    <EmbeddedResource Include="Images\icons8-plus-math-71.png" />
     <EmbeddedResource Include="Images\no_image_icon.png" />
     <EmbeddedResource Include="Resources\Fonts\Font Awesome 6 Brands-Regular-400.otf" />
     <EmbeddedResource Include="Resources\Fonts\Font Awesome 6 Free-Regular-400.otf" />
