@@ -14,7 +14,7 @@
     </ContentPage.BindingContext>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="{local:EmbeddedImage ResorceId=App1.Images.icons8-plus-math-71.png}" Command="{Binding AddItem}" />
+        <ToolbarItem Command="{Binding AddItem}" IconImageSource="{local:EmbeddedImage ResorceId=App1.Images.icons8-plus-math-71.png}" />
     </ContentPage.ToolbarItems>
 
     <ContentPage.Resources>
@@ -81,7 +81,7 @@
                                         Detail="{Binding Date, StringFormat='{0:MM/dd/yy}'}"
                                         DetailColor="Gray"
                                         ImageSource="{local:EmbeddedImage ResorceId=App1.Images.no_image_icon.png}"
-                                        Text="{Binding Title}"
+                                        Text="{Binding Name}"
                                         TextColor="{StaticResource Primary}">
                                         <ImageCell.ContextActions>
                                             <ToolbarItem CommandParameter="{Binding .}" Text="Delete" />

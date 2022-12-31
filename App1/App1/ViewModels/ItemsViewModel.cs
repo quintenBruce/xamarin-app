@@ -48,17 +48,17 @@ namespace App1.ViewModels
         {
             var newItems = new ObservableCollection<Item>
             {
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Bookshelves"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Alen Desk"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Console"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Entry Console"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Barndoor"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Outdoor Sofa Table"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Table"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Bed"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Dresser"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Desk"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Bench"}
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Bookshelves"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Alen Desk"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Console"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Entry Console"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Barndoor"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Outdoor Sofa Table"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Table"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Bed"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Dresser"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Desk"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Bench"}
             };
 
             foreach (var item in Items.ToArray())
@@ -80,7 +80,7 @@ namespace App1.ViewModels
 
         public ICommand PerformSearch => new Command<string>((string query) =>
         {
-            var filteredItems = Items.Where(x => x.Title.ToLower().Contains(query.ToLower()));
+            var filteredItems = Items.Where(x => x.Name.ToLower().Contains(query.ToLower()));
             foreach (var item in Items.ToArray())
             {
                 if (!filteredItems.Contains(item))
@@ -118,29 +118,29 @@ namespace App1.ViewModels
 
             Items = new ObservableCollection<Item>
             {
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Bookshelves", Images =  new List<App1.Models.Image> { new App1.Models.Image { Path = "/data/user/0/com.companyname.app1/cache/20221228_131837.jpg" }, new App1.Models.Image { Path = "/data/user/0/com.companyname.app1/cache/20221228_131837.jpg" } }},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThThisis", Title = "Alen Desk", Images =  new List<App1.Models.Image> {  new App1.Models.Image { Path = "/data/user/0/com.companyname.app1/cache/20221228_131837.jpg" } }},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Console", Images =  new List<App1.Models.Image> {  new App1.Models.Image { Path = "/data/user/0/com.companyname.app1/cache/20221228_131837.jpg" }, new App1.Models.Image { Path = "/data/user/0/com.companyname.app1/cache/20221228_131837.jpg" }, new App1.Models.Image { Path = "/data/user/0/com.companyname.app1/cache/20221228_131837.jpg" } }},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThThisThisThisThisThisis", Title = "Entry Console", },
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThiThiss", Title = "Barndoor"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Outdoor Sofa Table"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Console"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThThisThisThisThisThisis", Title = "Entry Console"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Barndoor"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Outdoor Sofa Table"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThThisThisThisThisThisis", Title = "Table"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThThisThisis", Title = "Bed"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Table"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThThisis", Title = "Bed"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThiThiss", Title = "Dresser"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Desk"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Console"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThThisThisis", Title = "Entry Console"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Barndoor"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThThisis", Title = "Outdoor Sofa Table"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThThisThisThisis", Title = "Table"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Bed"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThiThisThisThisThiss", Title = "Bench"}
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Bookshelves", Images =  new List<App1.Models.Image> { new App1.Models.Image { Path = "/data/user/0/com.companyname.app1/cache/20221228_131837.jpg" }, new App1.Models.Image { Path = "/data/user/0/com.companyname.app1/cache/20221228_131837.jpg" } }},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThThisis", Name = "Alen Desk", Images =  new List<App1.Models.Image> {  new App1.Models.Image { Path = "/data/user/0/com.companyname.app1/cache/20221228_131837.jpg" } }},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Console", Images =  new List<App1.Models.Image> {  new App1.Models.Image { Path = "/data/user/0/com.companyname.app1/cache/20221228_131837.jpg" }, new App1.Models.Image { Path = "/data/user/0/com.companyname.app1/cache/20221228_131837.jpg" }, new App1.Models.Image { Path = "/data/user/0/com.companyname.app1/cache/20221228_131837.jpg" } }},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThThisThisThisThisThisis", Name = "Entry Console", },
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThiThiss", Name = "Barndoor"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Outdoor Sofa Table"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Console"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThThisThisThisThisThisis", Name = "Entry Console"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Barndoor"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Outdoor Sofa Table"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThThisThisThisThisThisis", Name = "Table"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThThisThisis", Name = "Bed"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Table"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThThisis", Name = "Bed"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThiThiss", Name = "Dresser"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Desk"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Console"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThThisThisis", Name = "Entry Console"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Barndoor"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThThisis", Name = "Outdoor Sofa Table"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThThisThisThisis", Name = "Table"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Bed"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThiThisThisThisThiss", Name = "Bench"}
             };
 
             Height = (Items.Count * 60) + (Items.Count * 5);

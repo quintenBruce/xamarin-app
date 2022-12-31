@@ -30,10 +30,10 @@ namespace App1.ViewModels
         {
             var newItems = new ObservableCollection<Item>
             {
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Bookshelves"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Alan Desk"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Console"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Barndoor"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Bookshelves"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Alan Desk"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Console"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Barndoor"},
             };
 
             foreach (var item in Items.ToArray())
@@ -53,7 +53,7 @@ namespace App1.ViewModels
 
         public ICommand PerformSearch => new Command<string>((string query) =>
         {
-            var filteredItems = Items.Where(x => x.Title.Contains(query));
+            var filteredItems = Items.Where(x => x.Name.Contains(query));
             foreach (var item in Items.ToArray())
             {
                 if (!filteredItems.Contains(item))
@@ -79,10 +79,10 @@ namespace App1.ViewModels
 
             Items = new ObservableCollection<Item>
             {
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Bookshelves"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Alan Desk"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Console"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Title = "Barndoor"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Bookshelves"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Alan Desk"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Console"},
+                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Barndoor"},
             };
         }
     }
