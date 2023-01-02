@@ -24,7 +24,10 @@ namespace App1.Services
         public static async Task<List<Item>> GetAllItemsAsync()
         {
             await Init();
-            return database.GetAllWithChildren<Item>();
+            var items = database.GetAllWithChildren<Item>();
+            if (items is null || items.Count == 0)
+                return null;
+            return items;
         }
 
         public static async Task<int> UpdateItemAsync(Item item)
