@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -15,13 +16,6 @@ namespace App1.ViewModels
 {
     public class ItemsViewModel : BaseViewModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         public ICommand OpenWebCommand { get; }
 
         public ICommand Navigate => new Command<Item>((Item item) =>
@@ -41,34 +35,24 @@ namespace App1.ViewModels
         }
         );
 
-        public ObservableCollection<Item> Items { get; set; }
+        private ObservableCollection<Item> items;
+
+        public ObservableCollection<Item> Items
+        {
+            get => items;
+            set => items = value;
+        }
+
         public bool IsRefreshing_ { get; set; }
 
         public ICommand RefreshList => new Command(() =>
         {
-            var newItems = new ObservableCollection<Item>
-            {
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Bookshelves"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Alen Desk"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Console"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Entry Console"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Barndoor"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Outdoor Sofa Table"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Table"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Bed"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Dresser"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Desk"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Bench"}
-            };
+            Items = ListToObservableCollection(ItemsRepository.GetAllItemsAsync().Result);
 
-            foreach (var item in Items.ToArray())
-                Items.Remove(item);
+            ItemsVisibile = !(Items is null);
+            TextVisible = !ItemsVisibile;
 
-            foreach (var item in newItems)
-            {
-                if (!Items.ToArray().Contains(item))
-                    Items.Add(item);
-            }
+            Height = (Items is null) ? 0 : (Items.Count * 60) + (Items.Count * 5);
 
             IsRefreshing_ = false;
             Height = (Items.Count * 60) + (Items.Count * 5);
@@ -110,40 +94,49 @@ namespace App1.ViewModels
             }
         }
 
+        private bool itemsVisibile;
+
+        public bool ItemsVisibile
+
+        {
+            get { return itemsVisibile; }
+            set
+            {
+                itemsVisibile = value;
+            }
+        }
+
+        private bool textVisible;
+
+        public bool TextVisible
+        {
+            get { return textVisible; }
+            set { textVisible = value; }
+        }
+
         public ItemsViewModel()
         {
             Title = "Items";
             OpenWebCommand = new Command(async () =>
             await Shell.Current.GoToAsync($"{nameof(NewItemPage)}"));
 
-            Items = new ObservableCollection<Item>
-            {
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Bookshelves", Images =  new List<App1.Models.Image> { new App1.Models.Image { Path = "/data/user/0/com.companyname.app1/cache/20221228_131837.jpg" }, new App1.Models.Image { Path = "/data/user/0/com.companyname.app1/cache/20221228_131837.jpg" } }},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThThisis", Name = "Alen Desk", Images =  new List<App1.Models.Image> {  new App1.Models.Image { Path = "/data/user/0/com.companyname.app1/cache/20221228_131837.jpg" } }},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Console", Images =  new List<App1.Models.Image> {  new App1.Models.Image { Path = "/data/user/0/com.companyname.app1/cache/20221228_131837.jpg" }, new App1.Models.Image { Path = "/data/user/0/com.companyname.app1/cache/20221228_131837.jpg" }, new App1.Models.Image { Path = "/data/user/0/com.companyname.app1/cache/20221228_131837.jpg" } }},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThThisThisThisThisThisis", Name = "Entry Console", },
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThiThiss", Name = "Barndoor"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Outdoor Sofa Table"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Console"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThThisThisThisThisThisis", Name = "Entry Console"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Barndoor"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Outdoor Sofa Table"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThThisThisThisThisThisis", Name = "Table"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThThisThisis", Name = "Bed"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Table"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThThisis", Name = "Bed"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThiThiss", Name = "Dresser"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Desk"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Console"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThThisThisis", Name = "Entry Console"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Barndoor"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThThisis", Name = "Outdoor Sofa Table"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThThisThisThisis", Name = "Table"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "This", Name = "Bed"},
-                new Item {Id = 3, Date = DateTime.Now.Date, Notes = "ThiThisThisThisThiss", Name = "Bench"}
-            };
+            Items = ListToObservableCollection(ItemsRepository.GetAllItemsAsync().Result);
 
-            Height = (Items.Count * 60) + (Items.Count * 5);
+            ItemsVisibile = !(Items is null);
+            TextVisible = !ItemsVisibile;
+
+            Height = (Items is null) ? 0 : (Items.Count * 60) + (Items.Count * 5);
+        }
+
+        public ObservableCollection<Item> ListToObservableCollection(List<Item> items)
+        {
+            if (items == null)
+                return null;
+            var collection = new ObservableCollection<Item>();
+            foreach (var item in items)
+                collection.Add(item);
+
+            return collection;
         }
     }
 }

@@ -9,6 +9,7 @@ namespace App1.MarkupExtensions
     public class EmbeddedImage : IMarkupExtension
     {
         public string ResorceId { get; set; }
+
         public object ProvideValue(IServiceProvider serviceProvider)
         {
             if (string.IsNullOrWhiteSpace(ResorceId))
@@ -17,6 +18,3 @@ namespace App1.MarkupExtensions
         }
     }
 }
-
-
-

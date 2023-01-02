@@ -7,6 +7,7 @@
     xmlns:vm="clr-namespace:App1.ViewModels"
     xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
     xmlns:xfg="clr-namespace:XFGloss;assembly=XFGloss"
+    xmlns:coverImageConverter="clr-namespace:App1.Converters"
     Title="{Binding Title}">
 
     <ContentPage.BindingContext>
@@ -21,6 +22,7 @@
         <ResourceDictionary>
             <Color x:Key="Accent">#96d1ff</Color>
         </ResourceDictionary>
+        <coverImageConverter:CoverImageConverter x:Key="imageConverter" />
     </ContentPage.Resources>
 
     <RefreshView Command="{Binding RefreshList}" IsRefreshing="{Binding IsRefreshing_}">
@@ -42,8 +44,13 @@
                         <Frame
                             BackgroundColor="white"
                             BorderColor="ForestGreen"
-                            CornerRadius="5">
-                            <Frame Padding="0" CornerRadius="10">
+                            CornerRadius="5"
+                            Margin="0"
+                            Padding="9">
+                            <Frame
+                                Margin="0"
+                                Padding="0"
+                                CornerRadius="10">
                                 <SearchBar
                                     x:Name="searchBar"
                                     Margin="0"
@@ -63,11 +70,18 @@
                             </Frame>
                         </Frame>
                     </Frame>
-
+                    <Label
+                        Margin="10"
+                        FontSize="Medium"
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding TextVisible}"
+                        Text="Tap the plus button to create a new item!"
+                        TextColor="Gray" />
                     <Frame
                         Margin="10,10,0,0"
                         Padding="0"
-                        HasShadow="False">
+                        HasShadow="False"
+                        IsVisible="{Binding ItemsVisible}">
                         <ListView
                             x:Name="listView"
                             HeightRequest="{Binding Height}"
@@ -80,7 +94,7 @@
                                         CommandParameter="{Binding .}"
                                         Detail="{Binding Date, StringFormat='{0:MM/dd/yy}'}"
                                         DetailColor="Gray"
-                                        ImageSource="{local:EmbeddedImage ResorceId=App1.Images.no_image_icon.png}"
+                                        ImageSource="{Binding CoverImagePath, Converter={StaticResource imageConverter}}"
                                         Text="{Binding Name}"
                                         TextColor="{StaticResource Primary}">
                                         <ImageCell.ContextActions>
