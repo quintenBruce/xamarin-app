@@ -14,10 +14,55 @@ namespace App1.ViewModels
 {
     public class NewItemViewModel : BaseViewModel
     {
+        private Item item = new Item();
         private string name;
         private string notes;
-
+        private bool coverImageButtonVisible = true;
+        private bool coverImageVisible = false;
         private ObservableCollection<App1.Models.Image> images;
+        private string coverImagePath;
+
+        public string CoverImagePath
+        {
+            get
+            {
+                return coverImagePath;
+            }
+            set
+            {
+                coverImagePath = value;
+
+                CoverImageVisible = !(CoverImagePath is null);
+                CoverImageButtonVisible = !CoverImageVisible;
+                OnPropertyChanged(nameof(CoverImageButtonVisible));
+                OnPropertyChanged(nameof(coverImageVisible));
+                OnPropertyChanged(nameof(CoverImagePath));
+            }
+        }
+
+        public bool CoverImageButtonVisible
+        {
+            get
+            {
+                return coverImageButtonVisible;
+            }
+            set
+            {
+                coverImageButtonVisible = value;
+            }
+        }
+
+        public bool CoverImageVisible
+        {
+            get
+            {
+                return coverImageVisible;
+            }
+            set
+            {
+                coverImageVisible = value;
+            }
+        }
 
         public ObservableCollection<App1.Models.Image> Images
         {
@@ -46,6 +91,18 @@ namespace App1.ViewModels
             }
         }
 
+        public ICommand PickCoverImage => new Command(async () =>
+        {
+            var photo = await MediaPicker.PickPhotoAsync();
+            var stream = await photo.OpenReadAsync();
+            var photoPath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
+
+            var status = await FileFunctions.WriteFile(stream, photoPath);
+
+            if (status)
+                item.CoverImagePath = CoverImagePath = photoPath;
+        });
+
         // PickImage Command writes stream given by Xamarin.Essentials.MediaPicker.PickPhotoAsync()
         // to new file in applications cache.
         // A new Image object with path property set to new file will be added to Images observable collection
@@ -67,7 +124,6 @@ namespace App1.ViewModels
             if (!ValidateSave())
                 return;
 
-            var item = new Item();
             item.Notes = notes;
             item.Name = name;
             item.Date = DateTime.Now;

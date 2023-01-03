@@ -3,6 +3,7 @@
     x:Class="App1.Views.NewItemPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:coverImageConverter="clr-namespace:App1.Converters"
     xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
     xmlns:vm="clr-namespace:App1.ViewModels"
     Title="New Item"
@@ -12,6 +13,10 @@
     <ContentPage.BindingContext>
         <vm:NewItemViewModel />
     </ContentPage.BindingContext>
+    <ContentPage.Resources>
+
+        <coverImageConverter:CoverImageConverter x:Key="imageConverter" />
+    </ContentPage.Resources>
 
     <ContentPage.Content>
         <ScrollView>
@@ -28,12 +33,44 @@
                     FontSize="Medium"
                     Text="{Binding Notes, Mode=TwoWay}"
                     TextColor="White" />
-                <StackLayout Orientation="Horizontal">
+                <StackLayout
+                    Margin="0,0,0,6"
+                    IsVisible="{Binding CoverImageButtonVisible}"
+                    Orientation="Horizontal">
+                    <Button
+                        Command="{Binding PickCoverImage}"
+                        HorizontalOptions="FillAndExpand"
+                        Text="Pick Cover Photo" />
+                </StackLayout>
+                <!--  nested frames to give border width appearance  -->
+                <Label
+                    FontSize="Medium"
+                    Text="Cover photo: "
+                    TextColor="gray" />
+                <Frame
+                    Margin="0,4,0,0"
+                    Padding="0"
+                    BackgroundColor="Gray"
+                    CornerRadius="11">
+                    <Frame
+                        Margin="3"
+                        Padding="0"
+                        BackgroundColor="Gray"
+                        CornerRadius="9">
+                        <Image Source="{Binding CoverImagePath, Converter={StaticResource imageConverter}}" />
+                    </Frame>
+                </Frame>
+                <StackLayout Margin="0,5,0,0" Orientation="Horizontal">
                     <Button
                         Command="{Binding PickImage}"
                         HorizontalOptions="FillAndExpand"
-                        Text="Pick Image" />
+                        Text="Pick Notes Image" />
                 </StackLayout>
+                <Label
+                    FontSize="Medium"
+                    Text="Notes (Images): "
+                    TextColor="gray" />
+                <!--  Stack layout for notes (images)  -->
                 <StackLayout BindableLayout.ItemsSource="{Binding Images}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
@@ -49,7 +86,7 @@
                                         Padding="0"
                                         BackgroundColor="Gray"
                                         CornerRadius="9">
-                                        <Image BackgroundColor="white" Source="{Binding Path}" />
+                                        <Image Source="{Binding Path}" />
                                     </Frame>
                                 </Frame>
                             </StackLayout>
@@ -60,6 +97,7 @@
                     <Button
                         Command="{Binding CancelCommand}"
                         HorizontalOptions="FillAndExpand"
+                        BackgroundColor="#a64029"
                         Text="Cancel" />
                     <Button
                         Command="{Binding AddItem}"
