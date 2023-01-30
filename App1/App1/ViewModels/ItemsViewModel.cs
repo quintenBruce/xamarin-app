@@ -4,10 +4,7 @@ using App1.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -49,16 +46,21 @@ namespace App1.ViewModels
         {
             Items = ListToObservableCollection(ItemsRepository.GetAllItemsAsync().Result);
 
-            ItemsVisibile = !(Items is null);
-            TextVisible = !ItemsVisibile;
+            if (Items != null)
+            {
+                ItemsVisibile = !(Items is null);
+                TextVisible = !ItemsVisibile;
 
-            Height = (Items is null) ? 0 : (Items.Count * 60) + (Items.Count * 5);
+                Height = (Items is null) ? 0 : (Items.Count * 60) + (Items.Count * 5);
 
+                IsRefreshing_ = false;
+                Height = (Items.Count * 60) + (Items.Count * 5);
+
+                OnPropertyChanged(nameof(Height));
+                OnPropertyChanged(nameof(Items));
+                OnPropertyChanged(nameof(IsRefreshing_));
+            }
             IsRefreshing_ = false;
-            Height = (Items.Count * 60) + (Items.Count * 5);
-
-            OnPropertyChanged(nameof(Height));
-            OnPropertyChanged(nameof(Items));
             OnPropertyChanged(nameof(IsRefreshing_));
         });
 
