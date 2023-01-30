@@ -1,7 +1,9 @@
-﻿using App1.Models;
+﻿using App1.Helpers;
+using App1.Models;
 using SQLite;
 using SQLiteNetExtensions.Extensions;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 
@@ -39,7 +41,20 @@ namespace App1.Services
         public static async Task<int> DeleteItemAsync(Item item)
         {
             await Init();
-            return database.Delete(item);
+            bool status = true;
+            for (int i = 0; i < item.Images.Count; i++)
+            {
+                if (status)
+                {
+                    status = FileFunctions.DeleteFile(item.Images.ElementAt(i).Path);
+                    if (status)
+                        database.Delete<Image>(item.Images.ElementAt(i).Id);
+                }
+            }
+
+            if (status)
+                return database.Delete(item);
+            return 0;
         }
 
         public static async Task CreateItemAsync(Item item)

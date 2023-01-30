@@ -95,7 +95,11 @@ namespace App1.ViewModels
         {
             var photo = await MediaPicker.PickPhotoAsync();
             var stream = await photo.OpenReadAsync();
-            var photoPath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
+
+            Random rnd = new Random();
+            int num = rnd.Next(100000);
+
+            var photoPath = Path.Combine(FileSystem.CacheDirectory, (photo.FileName + num.ToString()));
 
             var status = await FileFunctions.WriteFile(stream, photoPath);
 

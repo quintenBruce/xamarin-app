@@ -19,7 +19,8 @@
         <vm:ItemDetailViewModel />
     </ContentPage.BindingContext>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Edit" />
+        <ToolbarItem Text="Edit " />
+        <ToolbarItem Text="Delete" Command="{Binding DeleteItem}" CommandParameter="{Binding Item}" />
     </ContentPage.ToolbarItems>
     <ScrollView>
         <local:PinchToZoomContainer>

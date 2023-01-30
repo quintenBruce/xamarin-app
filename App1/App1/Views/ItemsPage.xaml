@@ -3,11 +3,11 @@
     x:Class="App1.Views.ItemsPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:coverImageConverter="clr-namespace:App1.Converters"
     xmlns:local="clr-namespace:App1.MarkupExtensions"
     xmlns:vm="clr-namespace:App1.ViewModels"
     xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
     xmlns:xfg="clr-namespace:XFGloss;assembly=XFGloss"
-    xmlns:coverImageConverter="clr-namespace:App1.Converters"
     Title="{Binding Title}">
 
     <ContentPage.BindingContext>
@@ -42,11 +42,11 @@
                         BorderColor="white"
                         HasShadow="False">
                         <Frame
+                            Margin="0"
+                            Padding="9"
                             BackgroundColor="white"
                             BorderColor="ForestGreen"
-                            CornerRadius="5"
-                            Margin="0"
-                            Padding="9">
+                            CornerRadius="5">
                             <Frame
                                 Margin="0"
                                 Padding="0"
@@ -56,7 +56,7 @@
                                     Margin="0"
                                     BackgroundColor="CadetBlue"
                                     HorizontalOptions="FillAndExpand"
-                                    Placeholder="Search"
+                                    Placeholder="SEARCHHHHH BABY"
                                     SearchCommand="{Binding PerformSearch}"
                                     SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"
                                     TextColor="Cornsilk">
@@ -96,11 +96,7 @@
                                         DetailColor="Gray"
                                         ImageSource="{Binding CoverImagePath, Converter={StaticResource imageConverter}}"
                                         Text="{Binding Name}"
-                                        TextColor="{StaticResource Primary}">
-                                        <ImageCell.ContextActions>
-                                            <ToolbarItem CommandParameter="{Binding .}" Text="Delete" />
-                                        </ImageCell.ContextActions>
-                                    </ImageCell>
+                                        TextColor="{StaticResource Primary}" />
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
