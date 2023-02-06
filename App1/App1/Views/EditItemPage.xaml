@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="App1.Views.EditItemPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:coverImageConverter="clr-namespace:App1.Converters"
+    xmlns:vm="clr-namespace:App1.ViewModels"
+    Title="Edit">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding CancelCommand}" IsEnabled="True" />
+    </Shell.BackButtonBehavior>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+        <coverImageConverter:CoverImageConverter x:Key="imageConverter" />
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <StackLayout Padding="15" Spacing="5">
+            <Label
+                FontSize="Medium"
+                Text="Name"
+                TextColor="Black" />
+            <Frame
+                Margin="0"
+                Padding="2"
+                BorderColor="#6d6875"
+                CornerRadius="10">
+                <Editor
+                    Margin="2"
+                    AutoSize="TextChanges"
+                    BackgroundColor="white"
+                    FontSize="Medium"
+                    Text="{Binding Name, Mode=TwoWay}"
+                    TextColor="#C78748" />
+            </Frame>
+            <Label
+                FontSize="Medium"
+                Text="Written Notes"
+                TextColor="Black" />
+            <Frame
+                Margin="0"
+                Padding="2"
+                BorderColor="#6d6875"
+                CornerRadius="10">
+                <Editor
+                    Margin="2"
+                    AutoSize="TextChanges"
+                    FontSize="Medium"
+                    Text="{Binding Notes, Mode=TwoWay}"
+                    TextColor="#C78748" />
+            </Frame>
+            <Button
+                Margin="3"
+                BackgroundColor="#B1BF83"
+                Command="{Binding ChangeCoverImage}"
+                HorizontalOptions="FillAndExpand"
+                Text="New Cover Photo" />
+            <Frame
+                Margin="0,4,0,0"
+                Padding="0"
+                BackgroundColor="White"
+                CornerRadius="11">
+                <Frame
+                    Margin="3"
+                    Padding="0"
+                    BackgroundColor="White"
+                    CornerRadius="9">
+                    <Image Source="{Binding CoverImagePath, Converter={StaticResource imageConverter}}" />
+                </Frame>
+            </Frame>
+            <Button
+                Margin="3"
+                BackgroundColor="#B1BF83"
+                Command="{Binding AddImage}"
+                HorizontalOptions="FillAndExpand"
+                Text="Add Notes Image" />
+            <StackLayout BindableLayout.ItemsSource="{Binding Images}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <!--  nested frames to give border width appearance  -->
+                            <Frame
+                                Margin="0,4,0,0"
+                                Padding="0"
+                                BackgroundColor="White"
+                                CornerRadius="11">
+                                <Frame
+                                    Margin="3"
+                                    Padding="0"
+                                    BackgroundColor="White"
+                                    CornerRadius="9">
+
+                                    <StackLayout
+                                        Margin="0"
+                                        Padding="0"
+                                        Spacing="0">
+                                        <Image
+                                            Margin="0"
+                                            BackgroundColor="white"
+                                            Source="{Binding Path}" />
+                                        <Button
+                                            Margin="0"
+                                            Padding="0"
+                                            BackgroundColor="#6d6875"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:EditItemViewModel}}, Path=DeleteImage}"
+                                            CommandParameter="{Binding Path}"
+                                            HorizontalOptions="FillAndExpand"
+                                            Text="^ Delete Image ^" />
+                                    </StackLayout>
+                                </Frame>
+                            </Frame>
+                        </StackLayout>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+            <StackLayout Margin="0,4,0,0" Orientation="Horizontal">
+                <Button
+                    BackgroundColor="#6d6875"
+                    Command="{Binding CancelCommand}"
+                    HorizontalOptions="FillAndExpand"
+                    Text="Cancel" />
+                <Button
+                    BackgroundColor="#B1BF83"
+                    Command="{Binding Save}"
+                    HorizontalOptions="FillAndExpand"
+                    Text="Save" />
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

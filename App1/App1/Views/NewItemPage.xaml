@@ -95,9 +95,9 @@
                 </StackLayout>
                 <StackLayout Margin="0,4,0,0" Orientation="Horizontal">
                     <Button
+                        BackgroundColor="#a64029"
                         Command="{Binding CancelCommand}"
                         HorizontalOptions="FillAndExpand"
-                        BackgroundColor="#a64029"
                         Text="Cancel" />
                     <Button
                         Command="{Binding AddItem}"

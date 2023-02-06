@@ -1,16 +1,12 @@
-﻿using App1.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Xamarin.Forms;
 
 namespace App1.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        
-
         private bool isBusy = false;
 
         public bool IsBusy

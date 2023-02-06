@@ -41,33 +41,27 @@
                         BackgroundColor="white"
                         BorderColor="white"
                         HasShadow="False">
+
                         <Frame
                             Margin="0"
-                            Padding="9"
-                            BackgroundColor="white"
-                            BorderColor="ForestGreen"
-                            CornerRadius="5">
-                            <Frame
+                            Padding="0"
+                            CornerRadius="10">
+                            <SearchBar
+                                x:Name="searchBar"
                                 Margin="0"
-                                Padding="0"
-                                CornerRadius="10">
-                                <SearchBar
-                                    x:Name="searchBar"
-                                    Margin="0"
-                                    BackgroundColor="CadetBlue"
-                                    HorizontalOptions="FillAndExpand"
-                                    Placeholder="SEARCHHHHH BABY"
-                                    SearchCommand="{Binding PerformSearch}"
-                                    SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"
-                                    TextColor="Cornsilk">
-                                    <SearchBar.Behaviors>
-                                        <xct:EventToCommandBehavior
-                                            Command="{Binding PerformSearch}"
-                                            CommandParameter="{Binding Text, Source={x:Reference searchBar}}"
-                                            EventName="TextChanged" />
-                                    </SearchBar.Behaviors>
-                                </SearchBar>
-                            </Frame>
+                                BackgroundColor="#B1BF83"
+                                HorizontalOptions="FillAndExpand"
+                                Placeholder="Search..."
+                                SearchCommand="{Binding PerformSearch}"
+                                SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"
+                                TextColor="Cornsilk">
+                                <SearchBar.Behaviors>
+                                    <xct:EventToCommandBehavior
+                                        Command="{Binding PerformSearch}"
+                                        CommandParameter="{Binding Text, Source={x:Reference searchBar}}"
+                                        EventName="TextChanged" />
+                                </SearchBar.Behaviors>
+                            </SearchBar>
                         </Frame>
                     </Frame>
                     <Label
@@ -89,7 +83,7 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <ImageCell
-                                        xfg:CellGloss.BackgroundColor="MintCream"
+                                        xfg:CellGloss.BackgroundColor="White"
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ItemsViewModel}}, Path=Navigate}"
                                         CommandParameter="{Binding .}"
                                         Detail="{Binding Date, StringFormat='{0:MM/dd/yy}'}"

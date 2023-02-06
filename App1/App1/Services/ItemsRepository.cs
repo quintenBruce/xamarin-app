@@ -23,6 +23,7 @@ namespace App1.Services
             }
         }
 
+        //returns List of Items in database. Returns null if there are no items
         public static async Task<List<Item>> GetAllItemsAsync()
         {
             await Init();
@@ -32,12 +33,13 @@ namespace App1.Services
             return items;
         }
 
-        public static async Task<int> UpdateItemAsync(Item item)
+        public static void UpdateItem(Item item)
         {
-            await Init();
-            return database.Update(item);
+            Init();
+            database.UpdateWithChildren(item);
         }
 
+        //Deletes item and related images
         public static async Task<int> DeleteItemAsync(Item item)
         {
             await Init();
@@ -57,16 +59,37 @@ namespace App1.Services
             return 0;
         }
 
+        //This could be simplified. Identifies Image by path and deletes that row
+        public static async Task<int> DeleteImageByPathAsync(string path)
+        {
+            await Init();
+
+            var images = database.GetAllWithChildren<Image>();
+
+            var image = images.Where(x => x.Path == path).FirstOrDefault();
+
+            return database.Delete(image);
+        }
+
+        public static async Task<int> DeleteImage(Models.Image image)
+        {
+            await Init();
+            return database.Delete(image);
+        }
+
         public static async Task CreateItemAsync(Item item)
         {
             await Init();
             database.InsertWithChildren(item);
         }
 
-        public static void DeleteItemsandImages()
+        //Inserts image and returns new Image with primary key
+        public static async Task<Image> CreateImageAsync(Image image)
         {
-            database.DeleteAll<Item>();
-            database.DeleteAll<Image>();
+            await Init();
+            database.Insert(image);
+            var newImage = database.Query<Image>("SELECT * FROM Image WHERE Path = ?", image.Path).First();
+            return newImage;
         }
     }
 }
