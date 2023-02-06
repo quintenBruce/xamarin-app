@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace App1.Helpers
@@ -28,6 +26,22 @@ namespace App1.Helpers
                 return false;
 
             return true;
+        }
+
+        // Checks if file exists at <param>path</param> parameter. Renames path until path exists.
+        public static string CheckFilePath(string path)
+        {
+            int count = 1;
+            string newPath = path;
+            string fileType = "." + path.Split('.').Last();
+            while (File.Exists(newPath))
+            {
+                newPath = newPath.Replace(fileType, "").Replace("(" + (count - 1).ToString() + ")", "");
+                newPath = path.Replace(fileType, "") + "(" + count.ToString() + ")" + fileType;
+                count++;
+            }
+
+            return newPath;
         }
     }
 }

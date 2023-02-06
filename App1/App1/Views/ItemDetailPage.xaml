@@ -19,43 +19,24 @@
         <vm:ItemDetailViewModel />
     </ContentPage.BindingContext>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Edit " />
-        <ToolbarItem Text="Delete" Command="{Binding DeleteItem}" CommandParameter="{Binding Item}" />
+        <ToolbarItem
+            Command="{Binding EditItem}"
+            CommandParameter="{Binding Item}"
+            Text="Edit " />
+        <ToolbarItem
+            Command="{Binding DeleteItem}"
+            CommandParameter="{Binding Item}"
+            Text="Delete" />
     </ContentPage.ToolbarItems>
     <ScrollView>
         <local:PinchToZoomContainer>
             <local:PinchToZoomContainer.Content>
-                <StackLayout Padding="15" Spacing="20">
-                    <Grid ColumnSpacing="0" RowSpacing="0">
-                        <!--  Grid to properly space Notes "(pinch to zoom)" text  -->
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="64" />
-                            <ColumnDefinition Width="149" />
-                            <ColumnDefinition Width="60" />
-                        </Grid.ColumnDefinitions>
-                        <Label
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            FontSize="Large"
-                            Text="Notes "
-                            TextColor="#303030"
-                            VerticalOptions="Center" />
-                        <Label
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            Padding="0,4,0,0"
-                            FontSize="13"
-                            Text=" (pinch laterally to zoom)"
-                            TextColor="#303030"
-                            VerticalOptions="Center" />
-                        <Label
-                            Grid.Row="0"
-                            Grid.Column="2"
-                            FontSize="Large"
-                            Text=" :"
-                            TextColor="#303030"
-                            VerticalOptions="Center" />
-                    </Grid>
+                <StackLayout Padding="15" Spacing="5">
+                    <Label
+                        FontSize="Medium"
+                        Text="(pinch &lt;--&gt; to zoom)"
+                        TextColor="#303030"
+                        VerticalOptions="Center" />
                     <!--  stack layout bound to Images property that will contain images  -->
                     <StackLayout BindableLayout.ItemsSource="{Binding Images}">
                         <BindableLayout.ItemTemplate>
@@ -63,14 +44,14 @@
                                 <StackLayout>
                                     <!--  nested frames to give border width appearance  -->
                                     <Frame
-                                        Margin="0"
+                                        Margin="0,4,0,0"
                                         Padding="0"
-                                        BackgroundColor="#767676"
+                                        BackgroundColor="White"
                                         CornerRadius="11">
                                         <Frame
                                             Margin="3"
                                             Padding="0"
-                                            BackgroundColor="#767676"
+                                            BackgroundColor="White"
                                             CornerRadius="9">
                                             <Image BackgroundColor="white" Source="{Binding Path}" />
                                         </Frame>
@@ -80,24 +61,21 @@
                         </BindableLayout.ItemTemplate>
                     </StackLayout>
                     <Label
-                        FontSize="Large"
-                        Text="Written Notes:"
-                        TextColor="#303030" />
-                    <!--  nested frames to give border width appearance  -->
+                        FontSize="Medium"
+                        Text="Written Notes"
+                        TextColor="Black" />
                     <Frame
                         Margin="0"
-                        Padding="0"
-                        BackgroundColor="#767676"
-                        CornerRadius="7">
-                        <Frame
+                        Padding="2"
+                        BorderColor="#6d6875"
+                        CornerRadius="10">
+                        <Label
                             Margin="2"
-                            Padding="3,1,1,0"
-                            CornerRadius="5">
-                            <Label
-                                FontSize="Medium"
-                                Text="{Binding Notes}"
-                                TextColor="#767676" />
-                        </Frame>
+                            Padding="2"
+                            BackgroundColor="white"
+                            FontSize="Medium"
+                            Text="{Binding Notes}"
+                            TextColor="#C78748" />
                     </Frame>
                     <Label
                         FontSize="11"

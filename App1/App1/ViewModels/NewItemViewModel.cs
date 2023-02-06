@@ -2,7 +2,6 @@
 using App1.Models;
 using App1.Services;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -17,10 +16,15 @@ namespace App1.ViewModels
         private Item item = new Item();
         private string name;
         private string notes;
-        private bool coverImageButtonVisible = true;
+        private bool coverImageButtonVisible = true; //if image is visible, then button is not. visa versa
         private bool coverImageVisible = false;
         private ObservableCollection<App1.Models.Image> images;
         private string coverImagePath;
+
+        private bool ValidateSave()
+        {
+            return !String.IsNullOrWhiteSpace(Name);
+        }
 
         public string CoverImagePath
         {
@@ -42,55 +46,35 @@ namespace App1.ViewModels
 
         public bool CoverImageButtonVisible
         {
-            get
-            {
-                return coverImageButtonVisible;
-            }
-            set
-            {
-                coverImageButtonVisible = value;
-            }
+            get { return coverImageButtonVisible; }
+            set { coverImageButtonVisible = value; }
         }
 
         public bool CoverImageVisible
         {
-            get
-            {
-                return coverImageVisible;
-            }
-            set
-            {
-                coverImageVisible = value;
-            }
+            get { return coverImageVisible; }
+            set { coverImageVisible = value; }
         }
 
         public ObservableCollection<App1.Models.Image> Images
         {
             get { return images; }
-            set
-            {
-                images = value;
-            }
+            set { images = value; }
         }
 
         public string Name
         {
             get => name;
-            set
-            {
-                name = value;
-            }
+            set { name = value; }
         }
 
         public string Notes
         {
             get => notes;
-            set
-            {
-                notes = value;
-            }
+            set { notes = value; }
         }
 
+        //I'm not sure why I included the random number stuff..but this command writes the chosen file to cache and sets path to CoverImagePath Property and item field
         public ICommand PickCoverImage => new Command(async () =>
         {
             var photo = await MediaPicker.PickPhotoAsync();
@@ -100,7 +84,7 @@ namespace App1.ViewModels
             int num = rnd.Next(100000);
 
             var photoPath = Path.Combine(FileSystem.CacheDirectory, (photo.FileName + num.ToString()));
-
+            photoPath = FileFunctions.CheckFilePath(photoPath);
             var status = await FileFunctions.WriteFile(stream, photoPath);
 
             if (status)
@@ -116,13 +100,14 @@ namespace App1.ViewModels
             var photo = await MediaPicker.PickPhotoAsync();
             var stream = await photo.OpenReadAsync();
             var photoPath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
-
+            photoPath = FileFunctions.CheckFilePath(photoPath);
             var status = await FileFunctions.WriteFile(stream, photoPath);
 
             if (status)
                 Images.Add(new Models.Image() { Path = photoPath });
         });
 
+        //inserts new item into database if the form is valid -> navigates to root page
         public ICommand AddItem => new Command(async () =>
         {
             if (!ValidateSave())
@@ -131,7 +116,7 @@ namespace App1.ViewModels
             item.Notes = notes;
             item.Name = name;
             item.Date = DateTime.Now;
-            item.Images = (List<Models.Image>)images.ToList<App1.Models.Image>();
+            item.Images = images.ToList<App1.Models.Image>();
 
             await ItemsRepository.CreateItemAsync(item);
 
@@ -157,11 +142,6 @@ namespace App1.ViewModels
             Notes = notes;
             images = new ObservableCollection<App1.Models.Image>();
             Images = images;
-        }
-
-        private bool ValidateSave()
-        {
-            return !String.IsNullOrWhiteSpace(Name);
         }
     }
 }
